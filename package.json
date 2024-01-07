@@ -9,7 +9,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup"
+    "build": "rm -rf dist && tsup",
+    "test": "jest"
   },
   "keywords": [
     "bonbast",
@@ -26,14 +27,28 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@babel/core": "^7.23.7",
+    "@babel/preset-env": "^7.23.7",
     "@types/jest": "^29.5.11",
+    "@typescript-eslint/eslint-plugin": "^6.18.0",
+    "@typescript-eslint/parser": "^6.18.0",
+    "babel-jest": "^29.7.0",
+    "eslint": "^8.56.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-standard-with-typescript": "^43.0.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^16.6.1",
+    "eslint-plugin-promise": "^6.1.1",
     "jest": "^29.7.0",
-    "prettier": "3.1.1",
+    "prettier": "^3.1.1",
     "ts-jest": "^29.1.1",
+    "ts-node": "^10.9.2",
     "tsup": "^8.0.1",
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "axios": "^1.6.5"
+    "axios": "^1.6.5",
+    "cheerio": "^1.0.0-rc.12"
   }
 }

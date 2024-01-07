@@ -4,13 +4,17 @@
     "noImplicitAny": true,
     "esModuleInterop": true,
     "strictNullChecks": true,
-    "target": "ES2022",
+    "lib": ["ESNext"],
+    "target": "ESNext",
+    "moduleDetection": "force",
     "moduleResolution": "Node",
-    "module": "CommonJS",
+    "module": "ESNext",
     "declaration": true,
     "isolatedModules": true,
-    "noEmit": true,
-    "outDir": "dist"
+    "noEmit": false,
+    "allowJs": true,
+    "outDir": "dist",
+    "skipLibCheck": true
   },
   "include": ["src"],
   "exclude": ["node_modules"]
