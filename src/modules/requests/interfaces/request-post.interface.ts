@@ -1,8 +1,8 @@
-import {RequestHeaders} from '../types';
+import {RequestHeadersType} from '../types';
 
 export interface RequestPost {
     url: string;
-    headers: RequestHeaders;
-    param: RequestHeaders;
+    headers: RequestHeadersType;
+    param: string | Record<string, any> | object | number;
 }
 

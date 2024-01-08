@@ -1,7 +1,7 @@
-import {RequestHeaders} from '../types';
+import {RequestHeadersType} from '../types';
 
 export interface RequestGet {
     url: string;
-    headers: RequestHeaders;
+    headers: RequestHeadersType;
 }
 
