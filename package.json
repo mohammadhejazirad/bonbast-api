@@ -23,6 +23,14 @@
     "Bonbast",
     "bonbast-toman"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mohammadhejazirad/bonbast-api"
+  },
+  "homepage": "https://github.com/mohammadhejazirad/bonbast-api",
+  "bugs": {
+    "url": "https://github.com/mohammadhejazirad/bonbast-api/issues"
+  },
   "author": {
     "name": "MohammadReza HejaziRad",
     "email": "hejazi00831@gmail.com",
