@@ -1,4 +1,4 @@
-export interface CurrencyModelInterface {
+export interface CurrencyModelResponse {
     code: string;
     name?: string;
     sell?: number | string | null;

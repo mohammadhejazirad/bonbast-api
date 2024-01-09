@@ -2,6 +2,8 @@
 
 A node library to get exchange rates from the bonbast site
 
+Taken from the [bonbast](https://github.com/SamadiPour/bonbast) library
+
 - [Installation](#installation)
 - [Usage](#usage)
 
@@ -33,6 +35,8 @@ import es6 or typescript:
 import {BonbastApi} from 'bonbast-api';
 ```
 
+<hr/>
+
 Get Response:
 
 ``` typescript
@@ -48,7 +52,7 @@ options:
 
 simple response:
 
-```json
+```json lines
  {
   aed1: '14120',
   aed2: '14070',
@@ -62,6 +66,8 @@ simple response:
   // and more ...
 }
 ```
+
+<hr/>
 
 Get Currency:
 
@@ -78,7 +84,7 @@ options:
 
 simple response:
 
-```json
+```json lines
 [
   {
     code: 'bhd',
@@ -104,13 +110,24 @@ simple response:
 
 ```
 
+<hr/>
+
 Get Coin:
 
 ```typescript
 const getCoin = await BonbastApi.getCoin();
 ```
 
-```json
+options:
+
+| name          | type    | default | description                     |
+|---------------|---------|---------|---------------------------------|
+| sellAddCommas | boolean | true    | for add / remove commas numbers |
+| buyAddCommas  | boolean | true    | for add / remove commas numbers |
+
+simple response:
+
+```json lines
 [
   {
     code: 'emami',
@@ -129,6 +146,81 @@ const getCoin = await BonbastApi.getCoin();
 ]
 ```
 
+<hr/>
 
+Get Gold:
 
+```typescript
+const getCoin = await BonbastApi.getGold({priceAddCommas: false});
+```
+
+options:
+
+| name           | type    | default | description                     |
+|----------------|---------|---------|---------------------------------|
+| priceAddCommas | boolean | true    | for add / remove commas numbers |
+
+simple response:
+
+```json lines
+[
+  {
+    code: 'mithqal',
+    name: 'Gold Mithqal',
+    price: 11219000
+  },
+  {
+    code: 'gol18',
+    name: 'Gold Gram',
+    price: 2589916
+  },
+  {
+    code: 'ounce',
+    name: 'Ounce',
+    price: 2029.24
+  },
+  {
+    code: 'bitcoin',
+    name: 'Bitcoin',
+    price: 46873.93
+  }
+]
+```
+
+<hr/>
+
+## description:
+
+**List of supported currencies:**
+
+| Flag | Currency          | Code |
+|:----:|-------------------|:----:|
+| 🇺🇸 | US Dollar         | USD  |
+| 🇪🇺 | Euro              | EUR  |
+| 🇬🇧 | British Pound     | GBP  |
+| 🇨🇭 | Swiss Franc       | CHF  |
+| 🇨🇦 | Canadian Dollar   | CAD  |
+| 🇦🇺 | Australian Dollar | AUD  |
+| 🇸🇪 | Swedish Krona     | SEK  |
+| 🇳🇴 | Norwegian Krone   | NOK  |
+| 🇷🇺 | Russian Ruble     | RUB  |
+| 🇹🇭 | Thai Baht         | THB  |
+| 🇸🇬 | Singapore Dollar  | SGD  |
+| 🇭🇰 | Hong Kong Dollar  | HKD  |
+| 🇦🇿 | Azerbaijani Manat | AZN  |
+| 🇦🇲 | 10 Armenian Dram  | AMD  |
+| 🇩🇰 | Danish Krone      | DKK  |
+| 🇦🇪 | UAE Dirham        | AED  |
+| 🇯🇵 | 10 Japanese Yen   | JPY  |
+| 🇹🇷 | Turkish Lira      | TRY  |
+| 🇨🇳 | Chinese Yuan      | CNY  |
+| 🇸🇦 | Saudi Riyal       | SAR  |
+| 🇮🇳 | Indian Rupee      | INR  |
+| 🇲🇾 | Malaysian Ringgit | MYR  |
+| 🇦🇫 | Afghan Afghani    | AFN  |
+| 🇰🇼 | Kuwaiti Dinar     | KWD  |
+| 🇮🇶 | 100 Iraqi Dinar   | IQD  |
+| 🇧🇭 | Bahraini Dinar    | BHD  |
+| 🇴🇲 | Omani Rial        | OMR  |
+| 🇶🇦 | Qatari Rial       | QAR  |
 

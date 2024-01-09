@@ -1,16 +1,27 @@
 import {BonbastApi} from '../src';
 
-describe('Your Test Suite', () => {
-	test('Your Test Case', async () => {
+describe('Test BonbastApi for TS', () => {
+
+	test('getResponse', async () => {
 		const getResponse = await BonbastApi.getResponse();
+		console.log(getResponse);
+	});
+	
+	test('getCurrency', async () => {
 		const getCurrency = await BonbastApi.getCurrency({
-			sellAddCommas: true,
-			buyAddCommas: true
+			sellAddCommas: false,
+			buyAddCommas: false
 		});
+		console.log(getCurrency);
+	});
+
+	test('getCoin', async () => {
 		const getCoin = await BonbastApi.getCoin();
-		console.log({
-			getCoin
-		});
-		console.log('Finished TS');
+		console.log(getCoin);
+	});
+
+	test('getGold', async () => {
+		const getGold = await BonbastApi.getGold();
+		console.log(getGold);
 	});
 });

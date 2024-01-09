@@ -1,4 +1,4 @@
-export interface CoinModelInterface {
+export interface CoinModelResponse {
     code: string;
     name?: string;
     sell?: number | string | null;

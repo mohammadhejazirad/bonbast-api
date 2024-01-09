@@ -1,25 +1,26 @@
 import {Axios} from './request.axios';
 import {
 	CoinModel,
-	CoinModelInterface,
+	CoinModelResponse,
 	CurrencyModel,
-	CurrencyModelInterface,
+	CurrencyModelResponse,
+	GetCoinOptions,
+	GetCurrencyOptions,
+	GetGoldOptions,
 	Global,
+	GoldModel,
+	GoldModelResponse,
 	HeadersGetCurrency,
 	HeadersGetToken,
 	ResponseApi,
 	Utils
 } from '../common';
 import {Token} from './token.request';
-import {GetCoinOptions, GetCurrencyOptions} from '../common/interfaces/options';
 
 export class Request {
 	public static async getResponse(): Promise<ResponseApi> {
 		try {
 			const token = await this.getToken();
-			if (!token) {
-				throw new Error('token not found');
-			}
 			const data = await Axios.Post({
 				url: `${Global.BASE_URL}/json`,
 				headers: HeadersGetCurrency,
@@ -37,18 +38,15 @@ export class Request {
 		}
 	}
 
-	public static async getCurrency(options?: GetCurrencyOptions): Promise<CurrencyModelInterface[]> {
+	public static async getCurrency(options?: GetCurrencyOptions): Promise<CurrencyModelResponse[]> {
 		try {
 			const token = await this.getToken();
-			if (!token) {
-				throw new Error('token not found');
-			}
 			const data = await Axios.Post({
 				url: `${Global.BASE_URL}/json`,
 				headers: HeadersGetCurrency,
 				param: token,
 			});
-			const exportData: CurrencyModelInterface[] = [];
+			const exportData: CurrencyModelResponse[] = [];
 			const uniqueKeys: string[] = [];
 			const currencies = Object.keys(data).filter(key => key.match(/[a-z]+\d+/));
 			for (const currency of currencies) {
@@ -58,8 +56,8 @@ export class Request {
 					if (uniqueKeys.includes(key)) continue;
 					uniqueKeys.push(key);
 					const name = data[`${code}g`] || CurrencyModel[code as keyof typeof CurrencyModel];
-					const sell = options?.sellAddCommas == false ? data[`${code}${Global.SELL}`] : Utils.addCommasNumber(data[`${code}${Global.SELL}`]);
-					const buy = options?.buyAddCommas == false ? data[`${code}${Global.BUY}`] : Utils.addCommasNumber(data[`${code}${Global.BUY}`]);
+					const sell = options?.sellAddCommas === false ? Number(data[`${code}${Global.SELL}`]) : Utils.addCommasNumber(data[`${code}${Global.SELL}`]);
+					const buy = options?.buyAddCommas === false ? Number(data[`${code}${Global.BUY}`]) : Utils.addCommasNumber(data[`${code}${Global.BUY}`]);
 					exportData.push({code, name, sell, buy});
 				}
 			}
@@ -75,18 +73,15 @@ export class Request {
 		}
 	}
 
-	public static async getCoin(options?: GetCoinOptions): Promise<CoinModelInterface[]> {
+	public static async getCoin(options?: GetCoinOptions): Promise<CoinModelResponse[]> {
 		try {
 			const token = await this.getToken();
-			if (!token) {
-				throw new Error('token not found');
-			}
 			const data = await Axios.Post({
 				url: `${Global.BASE_URL}/json`,
 				headers: HeadersGetCurrency,
 				param: token,
 			});
-			const exportData: CoinModelInterface[] = [];
+			const exportData: CoinModelResponse[] = [];
 			const uniqueKeys: string[] = [];
 			const coins = Object.keys(data).filter(key => key.match(/[a-z]+\d+/));
 			for (const coin of Object.keys(CoinModel)) {
@@ -95,8 +90,8 @@ export class Request {
 					const name = CoinModel[coin as keyof typeof CoinModel];
 					if (uniqueKeys.includes(name)) continue;
 					const code = coinCode.replace(/\d+|[1g_]+/g, '');
-					const sell = options?.sellAddCommas == false ? data[`${coin}`] : Utils.addCommasNumber(data[`${coin}`]);
-					const buy = options?.buyAddCommas == false ? data[`${coin}${Global.BUY}`] : Utils.addCommasNumber(data[`${coin}${Global.BUY}`]);
+					const sell = options?.sellAddCommas === false ? Number(data[`${coin}`]) : Utils.addCommasNumber(data[`${coin}`]);
+					const buy = options?.buyAddCommas === false ? Number(data[`${coin}${Global.BUY}`]) : Utils.addCommasNumber(data[`${coin}${Global.BUY}`]);
 					uniqueKeys.push(name);
 					exportData.push({code, name, sell, buy});
 				}
@@ -113,15 +108,55 @@ export class Request {
 		}
 	}
 
-	private static async getToken(): Promise<string | null> {
+	public static async getGold(options?: GetGoldOptions): Promise<GoldModelResponse[]> {
+		try {
+			const token = await this.getToken();
+			const data = await Axios.Post({
+				url: `${Global.BASE_URL}/json`,
+				headers: HeadersGetCurrency,
+				param: token,
+			});
+
+			const exportData: GoldModelResponse[] = [];
+			const uniqueKeys: string[] = [];
+			const golds = Object.keys(data).filter(key => key.match(/[a-z]+\d+/));
+			for (const gold of Object.keys(GoldModel)) {
+				const name = GoldModel[gold as keyof typeof GoldModel];
+				const price = options?.priceAddCommas === false ? Number(data[`${gold}`]) : Utils.addCommasNumber(data[`${gold}`]);
+				const code = gold;
+				exportData.push({code, name, price});
+			}
+			return exportData;
+		} catch (error) {
+			if (error instanceof Error) {
+				console.error(`Error: Failed to connect to bonbast: ${error.message}`);
+				throw error;
+			} else {
+				console.error(`Unknown error occurred: ${error}`);
+				throw new Error('Unknown error occurred');
+			}
+		}
+	}
+
+	private static async getToken(): Promise<string> {
 		try {
 			const data = await Axios.Get({
 				url: Global.BASE_URL,
 				headers: HeadersGetToken
 			});
-			return Token.withdrawToken(data);
-		} catch (e) {
-			throw new Error(`Error: Failed to connect to bonbast: ${e}`);
+			const token = Token.withdrawToken(data);
+			if (!token) {
+				throw new Error('token not found');
+			}
+			return token;
+		} catch (error) {
+			if (error instanceof Error) {
+				console.error(`Error: Failed to connect to bonbast: ${error.message}`);
+				throw error;
+			} else {
+				console.error(`Unknown error occurred: ${error}`);
+				throw new Error('Unknown error occurred');
+			}
 		}
 	}
 }

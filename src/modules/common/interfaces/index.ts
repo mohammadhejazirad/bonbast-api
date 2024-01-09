@@ -1,3 +1,4 @@
 export * from './request-get.interface';
 export * from './request-post.interface';
-export * from './models';
+export * from './response-models';
+export * from './options';
