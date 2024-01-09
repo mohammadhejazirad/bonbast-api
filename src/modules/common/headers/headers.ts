@@ -1,5 +1,5 @@
 import {Global} from '../enums';
-import {RequestHeadersType} from '../../requests';
+import {RequestHeadersType} from '../types';
 
 export const HeadersGetToken:RequestHeadersType = {
 	'authority': 'bonbast.com',
@@ -19,7 +19,7 @@ export const HeadersGetToken:RequestHeadersType = {
 	'user-agent': Global.USER_AGENT,
 };
 
-export const HeadersGetPrice: RequestHeadersType = {
+export const HeadersGetCurrency: RequestHeadersType = {
 	'authority': 'bonbast.com',
 	'accept': 'application/json, text/javascript, */*; q=0.01',
 	'accept-language': 'en-US,en;q=0.9,fa;q=0.8',

@@ -1,5 +1,6 @@
 import {Request} from '../requests';
-import {ResponseApi} from '../common';
+import {CoinModelInterface, CurrencyModelInterface, ResponseApi} from '../common';
+import {GetCurrencyOptions} from '../common/interfaces/options';
 
 export class BonbastApi {
 	constructor(private readonly request: Request) {
@@ -9,7 +10,11 @@ export class BonbastApi {
 		return await Request.getResponse();
 	}
 
-	public static async getCurrency(): Promise<any> {
-		return await Request.getCurrency();
+	public static async getCurrency(options?: GetCurrencyOptions): Promise<CurrencyModelInterface[]> {
+		return await Request.getCurrency(options);
+	}
+
+	public static async getCoin(): Promise<CoinModelInterface[]> {
+		return await Request.getCoin();
 	}
 }

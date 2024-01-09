@@ -1,1 +1,1 @@
-export * from './modules';
+export {BonbastApi} from './modules';

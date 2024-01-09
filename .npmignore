@@ -1,8 +1,22 @@
 /src
 /node_modules
+/tests
+.github
+.git
 
+
+.*.swp
+._*
 .env
 .DS_Store
 
+
 tsconfig.json
 tsup.config.ts
+.eslintrc.js
+babel.config.js
+jest.config.ts
+npm-debug.log
+
+
+!build

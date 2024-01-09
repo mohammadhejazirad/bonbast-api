@@ -1,5 +1,5 @@
-import {RequestGet, RequestPost} from './interfaces';
 import axios from 'axios';
+import {RequestGet, RequestPost} from '../common';
 
 export class Axios {
 	public static async Post({url, param, headers}: RequestPost): Promise<any> {

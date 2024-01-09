@@ -28,19 +28,3 @@ export enum CurrencyModel {
     'omr' = 'Omani Rial',
     'qar' = 'Qatari Rial',
 }
-
-export class CurrencyData {
-	code: string;
-	name: string;
-	description?: string;
-	sell?: number;
-	buy?: number;
-
-	constructor(code: string, name: string, sell?: number, buy?: number, description?: string) {
-		this.code = code;
-		this.name = name;
-		this.sell = sell;
-		this.buy = buy;
-		this.description = description;
-	}
-}

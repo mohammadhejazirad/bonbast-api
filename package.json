@@ -9,9 +9,11 @@
     "dist"
   ],
   "scripts": {
+    "start": "npm run build && npm run test",
     "build": "cross-env rimraf dist && tsup",
     "test": "jest",
-    "start": "npm run build && npm run test"
+    "prettier": "prettier --write '{src,test}/**/*.{ts,json}' --config .prettierrc.js",
+    "prettier:ci": "prettier --list-different \"src/**/*.{ts,json}\" --config .prettierrc.js"
   },
   "keywords": [
     "bonbast",
@@ -31,6 +33,7 @@
     "@babel/core": "^7.23.7",
     "@babel/preset-env": "^7.23.7",
     "@types/jest": "^29.5.11",
+    "@types/node": "^20.10.7",
     "@typescript-eslint/eslint-plugin": "^6.18.0",
     "@typescript-eslint/parser": "^6.18.0",
     "babel-jest": "^29.7.0",
@@ -51,7 +54,7 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@persian-tools/persian-tools": "^3.5.1",
+    "@persian-tools/persian-tools": "^3.5.2",
     "axios": "^1.6.5",
     "cheerio": "^1.0.0-rc.12"
   }

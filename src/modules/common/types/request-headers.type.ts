@@ -1,4 +1,4 @@
-import {Global} from '../../common';
+import {Global} from '../index';
 
 export type RequestHeadersType = {
     'authority': string;
