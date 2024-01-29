@@ -16,15 +16,17 @@ import {
 	Utils
 } from '../common';
 import {Token} from './token.request';
+import {DateTime} from 'luxon';
 
 export class Request {
 	public static async getResponse(): Promise<ResponseApi> {
 		try {
 			const token = await this.getToken();
+			const newToken = this.replaceTimestamp(token, this.getTimeNow());
 			const data = await Axios.Post({
 				url: `${Global.BASE_URL}/json`,
 				headers: HeadersGetCurrency,
-				param: token,
+				param: newToken,
 			});
 			return {...data};
 		} catch (error) {
@@ -41,10 +43,11 @@ export class Request {
 	public static async getCurrency(options?: GetCurrencyOptions): Promise<CurrencyModelResponse[]> {
 		try {
 			const token = await this.getToken();
+			const newToken = this.replaceTimestamp(token, this.getTimeNow());
 			const data = await Axios.Post({
 				url: `${Global.BASE_URL}/json`,
 				headers: HeadersGetCurrency,
-				param: token,
+				param: newToken,
 			});
 			const exportData: CurrencyModelResponse[] = [];
 			const uniqueKeys: string[] = [];
@@ -76,14 +79,14 @@ export class Request {
 	public static async getCoin(options?: GetCoinOptions): Promise<CoinModelResponse[]> {
 		try {
 			const token = await this.getToken();
+			const newToken = this.replaceTimestamp(token, this.getTimeNow());
 			const data = await Axios.Post({
 				url: `${Global.BASE_URL}/json`,
 				headers: HeadersGetCurrency,
-				param: token,
+				param: newToken,
 			});
 			const exportData: CoinModelResponse[] = [];
 			const uniqueKeys: string[] = [];
-			const coins = Object.keys(data).filter(key => key.match(/[a-z]+\d+/));
 			for (const coin of Object.keys(CoinModel)) {
 				const coinsCode = Object.keys(data).filter(key => key.match(/[a-z]+\d+/) && key.includes(coin));
 				for (const coinCode of coinsCode) {
@@ -111,15 +114,14 @@ export class Request {
 	public static async getGold(options?: GetGoldOptions): Promise<GoldModelResponse[]> {
 		try {
 			const token = await this.getToken();
+			const newToken = this.replaceTimestamp(token, this.getTimeNow());
 			const data = await Axios.Post({
 				url: `${Global.BASE_URL}/json`,
 				headers: HeadersGetCurrency,
-				param: token,
+				param: newToken,
 			});
 
 			const exportData: GoldModelResponse[] = [];
-			const uniqueKeys: string[] = [];
-			const golds = Object.keys(data).filter(key => key.match(/[a-z]+\d+/));
 			for (const gold of Object.keys(GoldModel)) {
 				const name = GoldModel[gold as keyof typeof GoldModel];
 				const price = options?.priceAddCommas === false ? Number(data[`${gold}`]) : Utils.addCommasNumber(data[`${gold}`]);
@@ -158,5 +160,24 @@ export class Request {
 				throw new Error('Unknown error occurred');
 			}
 		}
+	}
+
+	private static getTimeNow(): string {
+		const now = DateTime.utc();
+		const formattedUtcDate = now.toFormat('yyyy-MM-dd-HH-mm-ss');
+		return formattedUtcDate;
+	}
+
+	private static replaceTimestamp(token: string, newTimestamp: string): string {
+		const regex = /\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2}/;
+		const match = token.match(regex);
+		if (match) {
+			const oldTimestamp = match[0];
+			if (oldTimestamp === newTimestamp) {
+				const replacedString = token.replace(oldTimestamp, newTimestamp);
+				return replacedString;
+			}
+		}
+		return token;
 	}
 }

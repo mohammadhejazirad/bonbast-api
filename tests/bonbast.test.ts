@@ -6,7 +6,7 @@ describe('Test BonbastApi for TS', () => {
 		const getResponse = await BonbastApi.getResponse();
 		console.log(getResponse);
 	});
-	
+
 	test('getCurrency', async () => {
 		const getCurrency = await BonbastApi.getCurrency({
 			sellAddCommas: false,

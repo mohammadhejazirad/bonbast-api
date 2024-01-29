@@ -1,7 +1,7 @@
 {
   "name": "bonbast-api",
   "description": "receive price from bonbast site",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -41,6 +41,7 @@
     "@babel/core": "^7.23.7",
     "@babel/preset-env": "^7.23.7",
     "@types/jest": "^29.5.11",
+    "@types/luxon": "^3.4.2",
     "@types/node": "^20.10.7",
     "@typescript-eslint/eslint-plugin": "^6.18.0",
     "@typescript-eslint/parser": "^6.18.0",
@@ -64,6 +65,7 @@
   "dependencies": {
     "@persian-tools/persian-tools": "^3.5.2",
     "axios": "^1.6.5",
-    "cheerio": "^1.0.0-rc.12"
+    "cheerio": "^1.0.0-rc.12",
+    "luxon": "^3.4.4"
   }
 }
